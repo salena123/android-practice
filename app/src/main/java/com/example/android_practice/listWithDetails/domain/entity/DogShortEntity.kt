@@ -1,0 +1,13 @@
+package com.example.android_practice.listWithDetails.domain.entity
+
+class DogShortEntity(
+    val id: String,
+    val name: String,
+    val origin: String?,
+    val temperament: String?,
+    val lifeSpan: String?,
+    val breedGroup: String?,
+    val bredFor: String,
+    val referenceImageId: String?,
+    val image: String?,
+)
