@@ -8,7 +8,6 @@ class DogFullEntity(
     val lifeSpan: String?,
     val breedGroup: String?,
     val bredFor: String?,
-    val referenceImageId: String?,
     val image: String?,
     val description: String?,
 )
