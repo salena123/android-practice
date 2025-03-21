@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">android-practice</string>
+    <string name="movie">Фильм</string>
+    <string name="series">Сериал</string>
+    <string name="search">Поиск</string>
 </resources>
