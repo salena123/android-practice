@@ -73,4 +73,8 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

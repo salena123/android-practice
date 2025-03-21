@@ -11,8 +11,3 @@ class DogFullEntity(
     val image: String?,
     val description: String?,
 )
-
-//enum class DogPicture( val stingRes: String) {
-//    ID(""),
-//    URL("")
-//}

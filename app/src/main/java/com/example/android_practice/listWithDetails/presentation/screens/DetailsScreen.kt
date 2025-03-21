@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.android_practice.listWithDetails.data.repository.DogsRepository
 import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
+import com.example.android_practice.listWithDetails.presentation.state.DogDetailState
+import com.example.android_practice.listWithDetails.presentation.viewsModel.DetailsViewModel
 import com.example.android_practice.ui.Spacing
 import com.example.android_practice.ui.components.EmptyDataBox
 import com.example.android_practice.ui.components.LikeButton
@@ -31,8 +33,9 @@ import com.github.terrakok.modo.Screen
 import com.github.terrakok.modo.ScreenKey
 import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.LocalStackNavigation
-import com.github.terrakok.modo.stack.StackNavContainer
 import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 
 @Parcelize
@@ -42,27 +45,37 @@ class DetailsScreen(
 ) : Screen {
     @Composable
     override fun Content(modifier: Modifier) {
-        val dog by remember {
-            mutableStateOf(DogsRepository().getById(dogId))
-        }
 
-        DogScreenContent(dog = dog, LocalStackNavigation.current )
+        val navigation = LocalStackNavigation.current
+
+        val viewModel = koinViewModel<DetailsViewModel>{ parametersOf(navigation, dogId)}
+        val state = viewModel.viewState
+
+        DogScreenContent(
+            state,
+            onBackPressed = { viewModel.back() },
+            onLikePressed = { viewModel.onLikeCounterChanged()}
+        )
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 private fun DogScreenContent(
-    dog: DogFullEntity?,
-    navigation: StackNavContainer? = null,
+
+    state: DogDetailState,
+    onBackPressed: () -> Unit,
+    onLikePressed: () -> Unit,
 ) {
     Scaffold (
-        topBar = { SimpleAppBar(dog?.name.orEmpty(), navigation) },
+        topBar = { SimpleAppBar(state.dog?.name.orEmpty(), onBackPressed) },
     ) {
-        dog ?: run {
+        val dog = state.dog ?: run {
             EmptyDataBox("Такая собака не найдена")
             return@Scaffold
         }
+
+
 
         Column(
             Modifier
@@ -124,7 +137,11 @@ private fun DogScreenContent(
                 style = MaterialTheme.typography.titleSmall,
             )
 
-            LikeButton(0, isLiked = false)
+            LikeButton(
+                likeCount = state.likes,
+                isLiked = state.isLiked,
+                onLikeClicked = onLikePressed
+            )
         }
     }
 
@@ -134,7 +151,13 @@ private fun DogScreenContent(
 @Preview
 @Composable
 private fun DogScreenContentPreview() {
-    DogsRepository().getById("1")?.let {
-        DogScreenContent(it)
-    }
+    DogScreenContent(
+        object : DogDetailState {
+            override val dog = DogsRepository().getById("3")
+            override val likes = 2
+            override val isLiked = true
+        },
+        onBackPressed = {}
+    ) { }
 }
+

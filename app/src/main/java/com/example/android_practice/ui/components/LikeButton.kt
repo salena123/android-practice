@@ -24,19 +24,14 @@ fun LikeButton(
     likeCount: Int,
     modifier: Modifier = Modifier,
     isLiked: Boolean,
+    onLikeClicked: () -> Unit,
 ) {
-    var likeCount by rememberSaveable { mutableStateOf(likeCount) }
-    var isLiked by rememberSaveable { mutableStateOf(isLiked) }
-
     Row(modifier = Modifier) {
         Icon(
             imageVector = if (isLiked) Icons.Rounded.Favorite else Icons.Rounded.FavoriteBorder,
             contentDescription = "Like",
             modifier = Modifier
-                .clickable {
-                    likeCount = if (isLiked) likeCount - 1 else likeCount + 1
-                    isLiked = !isLiked
-                }
+                .clickable { onLikeClicked.invoke() }
         )
 
         Spacer(modifier = Modifier.width(Spacing.medium))

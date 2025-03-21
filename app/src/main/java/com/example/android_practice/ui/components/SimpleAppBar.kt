@@ -16,7 +16,7 @@ import com.github.terrakok.modo.stack.back
 @OptIn(ExperimentalMaterial3Api::class)
 fun SimpleAppBar(
     title: String,
-    navigation: StackNavContainer?
+    onBackPressed: () -> Unit
 ) {
     TopAppBar(
         title = { Text(title) },
@@ -28,7 +28,7 @@ fun SimpleAppBar(
                         contentDescription = null
                     )
                 },
-                onClick = { navigation?.back()}
+                onClick = { onBackPressed.invoke() }
             )
         }
     )

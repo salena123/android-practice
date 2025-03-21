@@ -7,18 +7,13 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentComposer
 import androidx.compose.ui.Modifier
 import com.github.terrakok.modo.multiscreen.MultiScreenNavModel
 import kotlinx.parcelize.Parcelize
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.rounded.List
-import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.getValue
@@ -29,8 +24,6 @@ import com.example.android_practice.profile.presentation.screens.ProfileScreen
 import com.github.terrakok.modo.animation.SlideTransition
 import com.github.terrakok.modo.multiscreen.MultiScreen
 import com.github.terrakok.modo.multiscreen.selectScreen
-//import .listWithDetails.presentation.screens.ListScreen
-//import ru.dekabrsky.consecutivepractice2025.profile.presentation.screens.ProfileScreen
 
 @Parcelize
 class MainTabScreen(

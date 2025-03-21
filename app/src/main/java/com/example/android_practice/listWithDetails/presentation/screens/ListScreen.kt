@@ -39,6 +39,7 @@ import coil3.compose.AsyncImage
 import com.example.android_practice.R
 import com.example.android_practice.listWithDetails.data.repository.DogsRepository
 import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
+import com.example.android_practice.listWithDetails.presentation.viewsModel.ListViewModel
 import com.example.android_practice.ui.Spacing
 import com.example.android_practice.ui.components.EmptyDataBox
 import com.github.terrakok.modo.Screen
@@ -47,6 +48,8 @@ import com.github.terrakok.modo.generateScreenKey
 import com.github.terrakok.modo.stack.LocalStackNavigation
 import com.github.terrakok.modo.stack.forward
 import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Parcelize
 class ListScreen(
@@ -54,22 +57,18 @@ class ListScreen(
 ) : Screen {
     @Composable
     override fun Content(modifier: Modifier) {
-        var items by rememberSaveable {
-            mutableStateOf(DogsRepository().getList())
-        }
-
-        var search by rememberSaveable { mutableStateOf("") }
 
         var navigation = LocalStackNavigation.current
+
+        val viewModel = koinViewModel<ListViewModel>{ parametersOf(navigation) }
+        val state = viewModel.viewState
 
         Scaffold(
             topBar = {
                 TextField(
-                    value = search,
-                    onValueChange = {
-                        search = it
-                        items = DogsRepository().getList(search)
-                    },
+                    value = state.query,
+                    onValueChange = { viewModel.onQueryChanged(it) },
+
                     label = { Text(stringResource(R.string.search)) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -79,15 +78,15 @@ class ListScreen(
             },
             contentWindowInsets = WindowInsets(0.dp),
         ) {
-            if (items.isEmpty()) {
+            if (state.isEmpty) {
                 EmptyDataBox("Такая собака не найдена")
             }
 
             LazyColumn(Modifier.padding(it)) {
-                items(items) {
+                items(state.items) {
                     DogItem(
                         item = it,
-                        Modifier.clickable { navigation.forward(DetailsScreen(dogId = it.id)) }
+                        Modifier.clickable { viewModel.onItemClicked(it.id) }
                     )
                 }
             }
