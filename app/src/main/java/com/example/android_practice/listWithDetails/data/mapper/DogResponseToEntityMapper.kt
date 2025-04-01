@@ -24,7 +24,7 @@ class DogResponseToEntityMapper {
                 id = breed.id.orEmpty(),
                 name = breed.name.orEmpty(),
                 temperament = breed.temperament.orEmpty(),
-                image = ""
+                image = breed.image?.url.orEmpty()
             )
         }
 
@@ -39,7 +39,7 @@ class DogResponseToEntityMapper {
                 lifeSpan = it.lifeSpan.orEmpty(),
                 breedGroup = it.breedGroup.orEmpty(),
                 bredFor = it.bredFor.orEmpty(),
-                image = DogImage("https://cdn2.thedogapi.com/images/${it.referenceImageId}.jpg"),
+                image = DogImage(it.image?.url.orEmpty()),
                 description = it.description.orEmpty(),
             )
         }

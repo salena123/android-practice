@@ -24,11 +24,8 @@ class DogFullListResponse(
     val referenceImageId: String?,
     @SerializedName("description")
     val description: String?,
+    @SerializedName("image")
+    val image: DogImageResponse?
 ) : DogApiBase()
-
-class DogImageResponse(
-    @SerializedName("url")
-    val url: String?
-)
 
 
