@@ -14,16 +14,16 @@ class DogFullListResponse(
     val origin: String?,
     @SerializedName("temperament")
     val temperament: String?,
-    @SerializedName("lifeSpan")
+    @SerializedName("life_span")
     val lifeSpan: String?,
-    @SerializedName("breedGroup")
+    @SerializedName("breed_group")
     val breedGroup: String?,
-    @SerializedName("bredFor")
+    @SerializedName("bred_for")
     val bredFor: String?,
-    @SerializedName("image")
-    val image: DogImage?,
+    @SerializedName("reference_image_id")
+    val referenceImageId: String?,
     @SerializedName("description")
-    val description: String?
+    val description: String?,
 ) : DogApiBase()
 
 class DogImageResponse(

@@ -3,6 +3,7 @@ package com.example.android_practice.listWithDetails.data.repository
 import DogResponseToEntityMapper
 import com.example.android_practice.listWithDetails.data.api.DogApiService
 import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
+import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
 import com.example.android_practice.listWithDetails.domain.repository.IDogsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,14 +25,10 @@ class DogsRepository(
             }
         }
 
-    override suspend fun getByName(name: String) =
+    override suspend fun getByName(name: String): List<DogFullEntity> =
         withContext(Dispatchers.IO) {
-            val response = api.searchBreeds(name)
-            val breed = response.firstOrNull()
-            breed?.let {
-                val fullBreedResponse = api.getBreedByName(it.name ?: "")
-                mapper.mapBreedFull(fullBreedResponse)
-            }
+            val response = api.getBreedByName(name)
+            mapper.mapBreedFull(response)
         }
 }
 

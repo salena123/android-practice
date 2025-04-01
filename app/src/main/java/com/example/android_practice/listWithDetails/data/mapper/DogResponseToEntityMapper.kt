@@ -29,8 +29,8 @@ class DogResponseToEntityMapper {
         }
 
 
-    fun mapBreedFull(response: DogFullListResponse?): DogFullEntity? =
-        response?.let {
+    fun mapBreedFull(response: List<DogFullListResponse>) =
+        response.map {
             DogFullEntity(
                 id = it.id.orEmpty(),
                 name = it.name.orEmpty(),
@@ -39,8 +39,8 @@ class DogResponseToEntityMapper {
                 lifeSpan = it.lifeSpan.orEmpty(),
                 breedGroup = it.breedGroup.orEmpty(),
                 bredFor = it.bredFor.orEmpty(),
-                image = it.image?.let { img -> DogImage(img.url) } ?: DogImage(""),
-                description = it.description.orEmpty()
+                image = DogImage("https://cdn2.thedogapi.com/images/${it.referenceImageId}.jpg"),
+                description = it.description.orEmpty(),
             )
         }
 

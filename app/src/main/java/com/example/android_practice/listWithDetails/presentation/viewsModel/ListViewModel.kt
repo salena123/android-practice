@@ -56,8 +56,8 @@ class ListViewModel(
 
     }
 
-    fun onItemClicked(id: String) {
-        navigation.forward(DetailsScreen(dogId = id))
+    fun onItemClicked(name: String) {
+        navigation.forward(DetailsScreen(dogName = name))
     }
 
     fun onQueryChanged(query: String) {

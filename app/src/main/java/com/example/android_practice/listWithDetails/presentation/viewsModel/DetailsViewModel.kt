@@ -16,7 +16,6 @@ import kotlinx.coroutines.async
 class DetailsViewModel(
     private val repository: IDogsRepository,
     private val navigation: StackNavContainer,
-//    private val id: String,
     private val name: String,
 ): ViewModel() {
 
@@ -28,10 +27,9 @@ class DetailsViewModel(
             handleError = { mutableState.error = it.localizedMessage },
             updateLoading = { mutableState.isLoading = it },
         ) {
-            val dogDeferred = async { repository.getByName(name)}
-
-            mutableState.dog = dogDeferred.await()
-
+            val dogsDeferred = async { repository.getByName(name)}
+            val dogs = dogsDeferred.await()
+            mutableState.dog = dogs.firstOrNull()
         }
     }
 

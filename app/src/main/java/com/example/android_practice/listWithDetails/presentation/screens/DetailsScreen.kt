@@ -36,14 +36,13 @@ import org.koin.core.parameter.parametersOf
 @Parcelize
 class DetailsScreen(
     override val screenKey: ScreenKey = generateScreenKey(),
-    val dogId: String
+    val dogName: String
 ) : Screen {
     @Composable
     override fun Content(modifier: Modifier) {
-
         val navigation = LocalStackNavigation.current
 
-        val viewModel = koinViewModel<DetailsViewModel>{ parametersOf(navigation, dogId)}
+        val viewModel = koinViewModel<DetailsViewModel>{ parametersOf(navigation, dogName)}
         val state = viewModel.viewState
 
         DogScreenContent(
