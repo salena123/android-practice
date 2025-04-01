@@ -106,41 +106,6 @@ class ListScreen(
     }
 }
 
-@Composable
-fun DogItem(
-    item: DogShortEntity,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier
-            .padding(Spacing.medium)
-            .fillMaxSize(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        AsyncImage(
-            model = item.image ?: "без имени",
-            contentDescription = item.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-        )
-
-        Spacer(modifier = Modifier.width(Spacing.medium))
-
-        Column{
-            Text(
-                text = item.name ,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = "${item.temperament} ",
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

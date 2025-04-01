@@ -49,9 +49,9 @@ class DetailsViewModel(
 
         fun toggleLike() {
             if (isLiked) {
-                likes -= 1
+                likes --
             } else {
-                likes += 1
+                likes ++
             }
             isLiked = !isLiked
         }

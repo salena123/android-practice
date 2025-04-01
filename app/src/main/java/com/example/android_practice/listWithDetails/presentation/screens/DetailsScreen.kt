@@ -1,6 +1,7 @@
 package com.example.android_practice.listWithDetails.presentation.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.layout.VerticalRuler
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.android_practice.listWithDetails.presentation.state.DogDetailState
@@ -85,7 +88,7 @@ private fun DogScreenContent(
                 .padding(Spacing.medium)) {
             Row{
                 AsyncImage(
-                    model = dog.image?.url  ?: "нет изображения", contentDescription = null,
+                    model = dog.image?.url  ?: "", contentDescription = null,
                     modifier = Modifier.size(200.dp)
                 )
 
@@ -93,51 +96,65 @@ private fun DogScreenContent(
                     modifier = Modifier.width(Spacing.medium)
                 )
 
-                Column (Modifier.weight(1f)) {
+                Column (Modifier
+                    .weight(1f),
+                    verticalArrangement = Arrangement.SpaceBetween) {
                     Text(
                         text = dog.name,
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(top = 10.dp),
+                        modifier = Modifier,
                     )
 
-                    Text(
-                        text = "Выведены для: ${dog.bredFor  ?: "неизвестно"} ",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.bredFor != "") {
+                        Text(
+                            text = "Выведены для: ${dog.bredFor} ",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
-                    Text(
-                        text = "Страна происхождения: ${dog.origin  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.origin != "") {
+                        Text(
+                            text = "Страна происхождения: ${dog.origin}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
-                    Text(
-                        text = "Группа пород: ${dog.breedGroup  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.breedGroup != "") {
+                        Text(
+                            text = "Группа пород: ${dog.breedGroup}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
+                    if (dog.lifeSpan != "") {
                     Text(
-                        text = "Продолжительность жизни: ${dog.lifeSpan  ?: "неизвестно"}",
+                        text = "Продолжительность жизни: ${dog.lifeSpan}",
                         style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
+                        modifier = Modifier,
                     )
+                }
 
-                    Text(
-                        text = "Характер: ${dog.temperament  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.temperament != "") {
+                        Text(
+                            text = "Характер: ${dog.temperament}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(Spacing.large))
 
-            Text(
-                text = "Описание: ${dog.description ?: "не найдено"}",
-                style = MaterialTheme.typography.titleSmall,
-            )
+            if (dog.description != "") {
+                Text(
+                    text = "Описание: ${dog.description}",
+                    style = MaterialTheme.typography.titleSmall,
+                )
+            }
 
             LikeButton(
                 likeCount = state.likes,
