@@ -3,7 +3,6 @@ package com.example.android_practice.listWithDetails.data.api
 import com.example.android_practice.listWithDetails.data.model.DogBreed
 import com.example.android_practice.listWithDetails.data.model.DogFullListResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DogApiService {

@@ -1,7 +1,6 @@
 package com.example.android_practice.listWithDetails.data.model
 
 import androidx.annotation.Keep
-import com.example.android_practice.listWithDetails.domain.entity.DogImage
 import com.google.gson.annotations.SerializedName
 
 @Keep
@@ -20,8 +19,6 @@ class DogFullListResponse(
     val breedGroup: String?,
     @SerializedName("bred_for")
     val bredFor: String?,
-    @SerializedName("reference_image_id")
-    val referenceImageId: String?,
     @SerializedName("description")
     val description: String?,
     @SerializedName("image")

@@ -1,5 +1,4 @@
 import com.example.android_practice.listWithDetails.data.model.DogBreed
-import com.example.android_practice.listWithDetails.data.model.DogBreedListResponse
 import com.example.android_practice.listWithDetails.data.model.DogFullListResponse
 import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
 import com.example.android_practice.listWithDetails.domain.entity.DogImage

@@ -1,6 +1,5 @@
 package com.example.android_practice.listWithDetails.data.model
 
-import com.example.android_practice.listWithDetails.domain.entity.DogImage
 import com.google.gson.annotations.SerializedName
 
 

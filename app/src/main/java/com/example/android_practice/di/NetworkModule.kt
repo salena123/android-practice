@@ -1,11 +1,9 @@
 package com.example.android_practice.di
 
-import android.app.VoiceInteractor
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.android_practice.listWithDetails.data.api.DogApiService
 import okhttp3.HttpUrl
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
