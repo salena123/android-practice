@@ -37,11 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.android_practice.R
+import com.example.android_practice.listWithDetails.data.mock.DogsData
 import com.example.android_practice.listWithDetails.data.repository.DogsRepository
 import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
 import com.example.android_practice.listWithDetails.presentation.viewsModel.ListViewModel
 import com.example.android_practice.ui.Spacing
 import com.example.android_practice.ui.components.EmptyDataBox
+import com.example.android_practice.ui.components.FullscreenLoading
 import com.github.terrakok.modo.Screen
 import com.github.terrakok.modo.ScreenKey
 import com.github.terrakok.modo.generateScreenKey
@@ -78,15 +80,25 @@ class ListScreen(
             },
             contentWindowInsets = WindowInsets(0.dp),
         ) {
+            if (state.isLoading) {
+                FullscreenLoading()
+                return@Scaffold
+            }
+
+            state.error?.let {
+                EmptyDataBox(msg = it)
+                return@Scaffold
+            }
             if (state.isEmpty) {
                 EmptyDataBox("Такая собака не найдена")
+                return@Scaffold
             }
 
             LazyColumn(Modifier.padding(it)) {
                 items(state.items) {
                     DogItem(
                         item = it,
-                        Modifier.clickable { viewModel.onItemClicked(it.id) }
+                        Modifier.clickable { viewModel.onItemClicked(it.name) }
                     )
                 }
             }
@@ -133,6 +145,6 @@ fun DogItem(
 @Preview(showBackground = true)
 @Composable
 fun DogItemPreview(){
-    DogItem(item = DogsRepository().getList().first() )
+    DogItem(item = DogsData.dogsShortEntity.first())
 }
 

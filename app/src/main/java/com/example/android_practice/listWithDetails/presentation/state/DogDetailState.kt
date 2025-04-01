@@ -6,4 +6,6 @@ interface DogDetailState {
     val dog: DogFullEntity?
     val likes: Int
     val isLiked: Boolean
+    var isLoading: Boolean
+    var error: String?
 }
