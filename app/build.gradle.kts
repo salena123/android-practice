@@ -77,4 +77,9 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.gson)
+    debugImplementation("com.github.chuckerteam.chucker:library:4.1.0")
+    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.1.0")
 }

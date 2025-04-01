@@ -4,7 +4,7 @@ import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
 import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
 
 interface IDogsRepository {
-    fun getList(q: String =""): List<DogShortEntity>
+    suspend fun getList(q: String =""): List<DogShortEntity>
 
-    fun getById(id: String): DogFullEntity?
+    suspend fun getByName(name: String): List<DogFullEntity>
 }

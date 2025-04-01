@@ -24,6 +24,7 @@ import com.example.android_practice.profile.presentation.screens.ProfileScreen
 import com.github.terrakok.modo.animation.SlideTransition
 import com.github.terrakok.modo.multiscreen.MultiScreen
 import com.github.terrakok.modo.multiscreen.selectScreen
+import com.example.android_practice.ui.PurpleGrey40
 
 @Parcelize
 class MainTabScreen(
@@ -72,11 +73,13 @@ fun MainTabContent(
                             onTabClick(pos)
                         },
                     ) {
-                        val contentColor = LocalContentColor.current
                         val color by animateColorAsState(
-                            contentColor.copy(
-                                alpha = if (pos == selectedTabPos) contentColor.alpha else 0.5f
-                            ), label = ""
+                            targetValue = if (pos == selectedTabPos) {
+                                LocalContentColor.current
+                            } else {
+                                PurpleGrey40
+                            },
+                            label = ""
                         )
                         Icon(
                             rememberVectorPainter(tab.icon),

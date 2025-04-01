@@ -1,32 +1,28 @@
 package com.example.android_practice.listWithDetails.presentation.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.android_practice.listWithDetails.data.repository.DogsRepository
-import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
 import com.example.android_practice.listWithDetails.presentation.state.DogDetailState
 import com.example.android_practice.listWithDetails.presentation.viewsModel.DetailsViewModel
 import com.example.android_practice.ui.Spacing
 import com.example.android_practice.ui.components.EmptyDataBox
+import com.example.android_practice.ui.components.FullscreenLoading
 import com.example.android_practice.ui.components.LikeButton
 import com.example.android_practice.ui.components.SimpleAppBar
 import com.github.terrakok.modo.Screen
@@ -41,14 +37,13 @@ import org.koin.core.parameter.parametersOf
 @Parcelize
 class DetailsScreen(
     override val screenKey: ScreenKey = generateScreenKey(),
-    val dogId: String
+    val dogName: String
 ) : Screen {
     @Composable
     override fun Content(modifier: Modifier) {
-
         val navigation = LocalStackNavigation.current
 
-        val viewModel = koinViewModel<DetailsViewModel>{ parametersOf(navigation, dogId)}
+        val viewModel = koinViewModel<DetailsViewModel>{ parametersOf(navigation, dogName)}
         val state = viewModel.viewState
 
         DogScreenContent(
@@ -70,20 +65,28 @@ private fun DogScreenContent(
     Scaffold (
         topBar = { SimpleAppBar(state.dog?.name.orEmpty(), onBackPressed) },
     ) {
+        if (state.isLoading) {
+            FullscreenLoading()
+            return@Scaffold
+        }
+
         val dog = state.dog ?: run {
             EmptyDataBox("Такая собака не найдена")
             return@Scaffold
         }
-
-
+        state.error?.let {
+            EmptyDataBox(msg = it)
+            return@Scaffold
+        }
 
         Column(
             Modifier
                 .padding(it)
+                .verticalScroll(rememberScrollState())
                 .padding(Spacing.medium)) {
             Row{
                 AsyncImage(
-                    model = dog.image  ?: "нет изображения", contentDescription = null,
+                    model = dog.image?.url  ?: "", contentDescription = null,
                     modifier = Modifier.size(200.dp)
                 )
 
@@ -91,51 +94,65 @@ private fun DogScreenContent(
                     modifier = Modifier.width(Spacing.medium)
                 )
 
-                Column (Modifier.weight(1f)) {
+                Column (Modifier
+                    .weight(1f),
+                    verticalArrangement = Arrangement.SpaceBetween) {
                     Text(
                         text = dog.name,
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(top = 10.dp),
+                        modifier = Modifier,
                     )
 
-                    Text(
-                        text = "Выведены для: ${dog.bredFor  ?: "неизвестно"} ",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.bredFor != "") {
+                        Text(
+                            text = "Выведены для: ${dog.bredFor} ",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
-                    Text(
-                        text = "Страна происхождения: ${dog.origin  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.origin != "") {
+                        Text(
+                            text = "Страна происхождения: ${dog.origin}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
-                    Text(
-                        text = "Группа пород: ${dog.breedGroup  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.breedGroup != "") {
+                        Text(
+                            text = "Группа пород: ${dog.breedGroup}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
 
+                    if (dog.lifeSpan != "") {
                     Text(
-                        text = "Продолжительность жизни: ${dog.lifeSpan  ?: "неизвестно"}",
+                        text = "Продолжительность жизни: ${dog.lifeSpan}",
                         style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
+                        modifier = Modifier,
                     )
+                }
 
-                    Text(
-                        text = "Характер: ${dog.temperament  ?: "неизвестно"}",
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(top = 10.dp),
-                    )
+                    if (dog.temperament != "") {
+                        Text(
+                            text = "Характер: ${dog.temperament}",
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier,
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(Spacing.large))
 
-            Text(
-                text = "Описание: ${dog.description ?: "не найдено"}",
-                style = MaterialTheme.typography.titleSmall,
-            )
+            if (dog.description != "") {
+                Text(
+                    text = "Описание: ${dog.description}",
+                    style = MaterialTheme.typography.titleSmall,
+                )
+            }
 
             LikeButton(
                 likeCount = state.likes,
@@ -148,16 +165,16 @@ private fun DogScreenContent(
 
 }
 
-@Preview
-@Composable
-private fun DogScreenContentPreview() {
-    DogScreenContent(
-        object : DogDetailState {
-            override val dog = DogsRepository().getById("3")
-            override val likes = 2
-            override val isLiked = true
-        },
-        onBackPressed = {}
-    ) { }
-}
+//@Preview
+//@Composable
+//private fun DogScreenContentPreview() {
+//    DogScreenContent(
+//        object : DogDetailState {
+//            override val dog = DogsData.dogsFullEntity.find { it.id == "7"}
+//            override val likes = 2
+//            override val isLiked = true
+//        },
+//        onBackPressed = {}
+//    ) { }
+//}
 

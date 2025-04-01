@@ -6,4 +6,6 @@ interface DogsListState {
     val items: List<DogShortEntity>
     val query: String
     val isEmpty: Boolean
+    val error: String?
+    val isLoading: Boolean
 }
