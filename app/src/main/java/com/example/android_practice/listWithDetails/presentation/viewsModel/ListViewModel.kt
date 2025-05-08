@@ -1,9 +1,14 @@
 package com.example.android_practice.listWithDetails.presentation.viewsModel
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,6 +22,7 @@ import com.github.terrakok.modo.stack.forward
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import okio.IOException
+import org.koin.java.KoinJavaComponent.inject
 import retrofit2.HttpException
 
 class ListViewModel(
@@ -24,20 +30,33 @@ class ListViewModel(
     private val navigation: StackNavContainer
 ): ViewModel() {
 
+    private val dataStore: DataStore<Preferences> by inject(DataStore::class.java)
+    private val typesKey = stringSetPreferencesKey(KEY_DOG_TYPES)
+
     private  val mutableState = MutableDogsListState()
     val viewState = mutableState as DogsListState
 
-    val textChangesFlow = MutableStateFlow("")
+//    val textChangesFlow = MutableStateFlow("")
 
     private var filterTypes: Set<DogType> = emptySet()
 
     init {
         loadDogs()
+
+        viewModelScope.launch {
+            dataStore.data.collect{
+                filterTypes = it[typesKey]
+                    ?.map { DogType.getByValue(it) }
+                    ?.toSet()
+                    .orEmpty()
+                updateBadge()
+            }
+        }
         mutableState.typesVariants = setOf(DogType.TOY, DogType.HOUND)
     }
 
     private fun loadDogs() {
-        val query = textChangesFlow.value
+//        val query = textChangesFlow.value
 
         viewModelScope.launch {
             try {
@@ -82,6 +101,12 @@ class ListViewModel(
             filterTypes = mutableState.selectedTypes
             loadDogs()
             updateBadge()
+
+            viewModelScope.launch {
+                dataStore.edit {
+                    it[typesKey] = filterTypes.map {it.name}.toSet()
+                }
+            }
         }
         onSelectionDialogDismissed()
     }
@@ -111,5 +136,9 @@ class ListViewModel(
         override var typesVariants: Set<DogType> by mutableStateOf(emptySet())
         override var selectedTypes: Set<DogType> by mutableStateOf(emptySet())
         override var hasBadge: Boolean by mutableStateOf(false)
+    }
+
+    companion object {
+        private const val KEY_DOG_TYPES = "DOG_TYPES"
     }
 }
