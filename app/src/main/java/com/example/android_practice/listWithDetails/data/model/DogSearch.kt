@@ -16,5 +16,7 @@ class DogBreed(
     @SerializedName("temperament")
     val temperament: String?,
     @SerializedName("image")
-    val image: DogImageResponse?
+    val image: DogImageResponse?,
+    @SerializedName("breed_group")
+    val breedGroup: String?,
 )
