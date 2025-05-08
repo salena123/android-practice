@@ -3,6 +3,7 @@ import com.example.android_practice.listWithDetails.data.model.DogFullListRespon
 import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
 import com.example.android_practice.listWithDetails.domain.entity.DogImage
 import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
+import com.example.android_practice.listWithDetails.domain.entity.DogType
 
 
 class DogResponseToEntityMapper {
@@ -13,7 +14,8 @@ class DogResponseToEntityMapper {
                 id = breed.id.orEmpty(),
                 name = breed.name.orEmpty(),
                 temperament = breed.temperament.orEmpty(),
-                image = breed.image?.url.orEmpty()
+                image = breed.image?.url.orEmpty(),
+                dogType = DogType.getByValue(breed.breedGroup)
             )
         }
 
@@ -23,7 +25,8 @@ class DogResponseToEntityMapper {
                 id = breed.id.orEmpty(),
                 name = breed.name.orEmpty(),
                 temperament = breed.temperament.orEmpty(),
-                image = breed.image?.url.orEmpty()
+                image = breed.image?.url.orEmpty(),
+                dogType = DogType.getByValue(breed.breedGroup)
             )
         }
 
