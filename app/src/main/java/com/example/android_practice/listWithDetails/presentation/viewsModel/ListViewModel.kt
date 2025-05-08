@@ -126,6 +126,12 @@ class ListViewModel(
         mutableState.selectedTypes = filterTypes
     }
 
+    fun onItemDoubleClicked(item: DogShortEntity) {
+        viewModelScope.launch {
+            repository.saveFavorite(item)
+        }
+    }
+
     private class MutableDogsListState: DogsListState {
         override var items: List<DogShortEntity> by mutableStateOf(emptyList())
         override var query by mutableStateOf("")

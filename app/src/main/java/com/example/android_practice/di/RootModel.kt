@@ -12,6 +12,7 @@ import com.example.android_practice.listWithDetails.data.repository.DogsReposito
 import com.example.android_practice.listWithDetails.domain.repository.IDogsRepository
 import com.example.android_practice.listWithDetails.presentation.viewsModel.DetailsViewModel
 import com.example.android_practice.listWithDetails.presentation.viewsModel.ListViewModel
+import com.example.android_practice.profile.presentation.viewModel.ProfileViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -30,11 +31,12 @@ val rootModule = module {
         getDataStore(androidContext())
     }
 
-    single<IDogsRepository> { DogsRepository(get(), get()) }
+    single<IDogsRepository> { DogsRepository(get(), get(), get()) }
 
     factory { DogResponseToEntityMapper() }
 
     viewModel { ListViewModel(get(), it.get()) }
+    viewModel { ProfileViewModel(get()) }
     viewModel { DetailsViewModel(get(), it.get(), it.get()) }
 }
 

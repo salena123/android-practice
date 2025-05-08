@@ -1,6 +1,7 @@
 package com.example.android_practice.listWithDetails.presentation.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -20,6 +21,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -109,14 +111,20 @@ class ListScreen(
             }
 
             LazyColumn(Modifier.padding(it)) {
-                items(state.items) {
+                items(state.items) { item ->
                     DogItem(
-                        item = it,
-                        Modifier.clickable { viewModel.onItemClicked(it.name) }
+                        item = item,
+                        Modifier.pointerInput(Unit) {
+                            detectTapGestures(
+                                onTap = { viewModel.onItemClicked(item.name) },
+                                onDoubleTap = { viewModel.onItemDoubleClicked(item)}
+                            )
+                        }
+//                        Modifier.clickable { viewModel.onItemClicked(it.name) }
                     )
                 }
             }
-            }
+        }
     }
 }
 

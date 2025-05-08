@@ -11,4 +11,7 @@ interface IDogsRepository {
     ): List<DogShortEntity>
 
     suspend fun getByName(name: String): List<DogFullEntity>
+
+    suspend fun getFavorites(): List<DogShortEntity>
+    suspend fun saveFavorite(dog: DogShortEntity)
 }
