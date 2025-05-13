@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.android_practice.R
-import com.example.android_practice.listWithDetails.data.mock.DogsData
+import com.example.android_practice.data.mock.DogsData
 import com.example.android_practice.listWithDetails.presentation.viewsModel.ListViewModel
 import com.example.android_practice.ui.Spacing
 import com.example.android_practice.ui.components.EmptyDataBox

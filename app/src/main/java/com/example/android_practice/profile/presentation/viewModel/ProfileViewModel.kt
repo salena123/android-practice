@@ -1,32 +1,35 @@
 package com.example.android_practice.profile.presentation.viewModel
 
+import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_practice.listWithDetails.domain.repository.IDogsRepository
-import com.example.android_practice.profile.presentation.state.ProfileViewState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.example.android_practice.domain.repository.IProfileRepository
+import com.example.android_practice.profile.presentation.model.state.ProfileState
 import kotlinx.coroutines.launch
 
+
 class ProfileViewModel(
-    private val repository: IDogsRepository
+    private val repository: IProfileRepository
 ): ViewModel() {
 
-    private var mutableState = MutableStateFlow(ProfileViewState())
-    val viewState = mutableState.asStateFlow()
+    private val mutableState = MutableProfileState()
+    val viewState = mutableState as ProfileState
 
     init {
-        updateFavorites()
-    }
-
-    fun onUpdateClick() {
-        updateFavorites()
-    }
-
-    private fun updateFavorites() {
         viewModelScope.launch {
-            mutableState.update { it.copy(items = repository.getFavorites()) }
+            repository.observeProfile().collect {
+                mutableState.name = it.name
+                mutableState.photoUri = Uri.parse(it.photoUri)
+            }
         }
+
+    }
+
+    private class MutableProfileState: ProfileState {
+        override var name by mutableStateOf("")
+        override var photoUri by mutableStateOf(Uri.EMPTY)
     }
 }

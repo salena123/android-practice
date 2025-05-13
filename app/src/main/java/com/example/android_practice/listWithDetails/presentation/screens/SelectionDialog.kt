@@ -2,7 +2,7 @@ package com.example.android_practice.listWithDetails.presentation.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.android_practice.listWithDetails.domain.entity.DogType
+import com.example.android_practice.domain.entity.DogType
 import androidx.compose.ui.window.Dialog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

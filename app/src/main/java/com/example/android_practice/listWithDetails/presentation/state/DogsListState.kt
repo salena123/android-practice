@@ -1,7 +1,7 @@
 package com.example.android_practice.listWithDetails.presentation.state
 
-import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
-import com.example.android_practice.listWithDetails.domain.entity.DogType
+import com.example.android_practice.domain.entity.DogShortEntity
+import com.example.android_practice.domain.entity.DogType
 
 
 interface DogsListState {

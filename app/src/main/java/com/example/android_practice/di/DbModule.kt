@@ -2,7 +2,7 @@ package com.example.android_practice.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.android_practice.listWithDetails.data.database.DogDatabase
+import com.example.android_practice.data.database.DogDatabase
 import org.koin.dsl.module
 
 val dbModule = module {

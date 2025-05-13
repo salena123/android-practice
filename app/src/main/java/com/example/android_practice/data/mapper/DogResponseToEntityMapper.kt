@@ -1,0 +1,51 @@
+import com.example.android_practice.data.model.DogBreed
+import com.example.android_practice.data.model.DogFullListResponse
+import com.example.android_practice.domain.entity.DogFullEntity
+import com.example.android_practice.domain.entity.DogImage
+import com.example.android_practice.domain.entity.DogShortEntity
+import com.example.android_practice.domain.entity.DogType
+
+
+class DogResponseToEntityMapper {
+
+    fun mapBreedList(response: List<DogBreed>) =
+        response.map { breed ->
+            DogShortEntity(
+                id = breed.id.orEmpty(),
+                name = breed.name.orEmpty(),
+                temperament = breed.temperament.orEmpty(),
+                image = breed.image?.url.orEmpty(),
+                dogType = DogType.getByValue(breed.breedGroup)
+            )
+        }
+
+    fun mapSearchBreeds(response: List<DogBreed>) =
+        response.map { breed ->
+            DogShortEntity(
+                id = breed.id.orEmpty(),
+                name = breed.name.orEmpty(),
+                temperament = breed.temperament.orEmpty(),
+                image = breed.image?.url.orEmpty(),
+                dogType = DogType.getByValue(breed.breedGroup)
+            )
+        }
+
+
+    fun mapBreedFull(response: List<DogFullListResponse>) =
+        response.map {
+            DogFullEntity(
+                id = it.id.orEmpty(),
+                name = it.name.orEmpty(),
+                origin = it.origin.orEmpty(),
+                temperament = it.temperament.orEmpty(),
+                lifeSpan = it.lifeSpan.orEmpty(),
+                breedGroup = it.breedGroup.orEmpty(),
+                bredFor = it.bredFor.orEmpty(),
+                image = DogImage(it.image?.url.orEmpty()),
+                description = it.description.orEmpty(),
+            )
+        }
+
+
+}
+

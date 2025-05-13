@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android_practice.core.coroutinesUtils.launchLoadingAndError
-import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
-import com.example.android_practice.listWithDetails.domain.repository.IDogsRepository
+import com.example.android_practice.domain.entity.DogFullEntity
+import com.example.android_practice.domain.repository.IDogsRepository
 import com.example.android_practice.listWithDetails.presentation.state.DogDetailState
 import com.github.terrakok.modo.stack.StackNavContainer
 import com.github.terrakok.modo.stack.back

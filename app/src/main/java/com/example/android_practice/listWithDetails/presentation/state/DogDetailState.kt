@@ -1,6 +1,6 @@
 package com.example.android_practice.listWithDetails.presentation.state
 
-import com.example.android_practice.listWithDetails.domain.entity.DogFullEntity
+import com.example.android_practice.domain.entity.DogFullEntity
 
 interface DogDetailState {
     val dog: DogFullEntity?

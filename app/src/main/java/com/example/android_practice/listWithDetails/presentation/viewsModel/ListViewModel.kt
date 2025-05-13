@@ -12,9 +12,9 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
-import com.example.android_practice.listWithDetails.domain.entity.DogType
-import com.example.android_practice.listWithDetails.domain.repository.IDogsRepository
+import com.example.android_practice.domain.entity.DogShortEntity
+import com.example.android_practice.domain.entity.DogType
+import com.example.android_practice.domain.repository.IDogsRepository
 import com.example.android_practice.listWithDetails.presentation.screens.DetailsScreen
 import com.example.android_practice.listWithDetails.presentation.state.DogsListState
 import com.github.terrakok.modo.stack.StackNavContainer
