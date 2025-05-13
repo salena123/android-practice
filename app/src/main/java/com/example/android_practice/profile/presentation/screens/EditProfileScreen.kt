@@ -160,6 +160,21 @@ class EditProfileScreen(
             }
         }
 
+        if (state.isNeedShowPermission) {
+            LaunchedEffect(Unit) {
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q &&
+                    ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissionLauncher.launch(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                }
+            }
+        }
+
         fun onCameraSelected() {
             val baseDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES
@@ -193,21 +208,6 @@ class EditProfileScreen(
                                 viewModel.onSelectDissMiss()
                             })
                     }
-                }
-            }
-        }
-
-        if (state.isNeedShowPermission) {
-            LaunchedEffect(Unit) {
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q &&
-                    ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED)
-                {
-                    requestPermissionLauncher.launch(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
                 }
             }
         }
