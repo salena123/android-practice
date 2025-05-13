@@ -2,7 +2,7 @@ package com.example.android_practice.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.example.android_practice.listWithDetails.data.api.DogApiService
+import com.example.android_practice.data.api.DogApiService
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import org.koin.dsl.module

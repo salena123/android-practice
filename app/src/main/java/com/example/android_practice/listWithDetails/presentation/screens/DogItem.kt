@@ -17,7 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.android_practice.listWithDetails.domain.entity.DogShortEntity
+import com.example.android_practice.domain.entity.DogShortEntity
 import com.example.android_practice.ui.Spacing
 
 @Composable

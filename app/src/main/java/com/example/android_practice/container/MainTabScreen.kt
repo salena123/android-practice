@@ -14,12 +14,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import com.example.android_practice.listWithDetails.presentation.screens.ListScreen
+import com.example.android_practice.profile.presentation.screens.FavoritesScreen
 import com.example.android_practice.profile.presentation.screens.ProfileScreen
 import com.github.terrakok.modo.animation.SlideTransition
 import com.github.terrakok.modo.multiscreen.MultiScreen
@@ -30,6 +32,7 @@ import com.example.android_practice.ui.PurpleGrey40
 class MainTabScreen(
     private val navModel: MultiScreenNavModel = MultiScreenNavModel(
         ListScreen(),
+        FavoritesScreen(),
         ProfileScreen(),
         selected = 0
     )
@@ -100,5 +103,6 @@ enum class MainTabs(
     val title: String
 ) {
     LIST(Icons.AutoMirrored.Rounded.List, "List"),
+    FAVORITES(Icons.Default.Favorite, "Favorites"),
     PROFILE(Icons.Default.Face, "Profile")
 }

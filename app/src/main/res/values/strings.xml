@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">android-practice</string>
-    <string name="movie">Фильм</string>
-    <string name="series">Сериал</string>
+    <string name="hound">Гончая</string>
+    <string name="toy">Комнатно-декоративная</string>
     <string name="search">Поиск</string>
+    <string name="other">Другое</string>
+    <string name="profile">Профиль</string>
+    <string name="name">Имя</string>
+    <string name="camera">Камера</string>
+    <string name="gallery">Галерея</string>
+    <string name="link">https://msp.midural.ru/download/97998/</string>
 </resources>
